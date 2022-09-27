@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { createContext, useReducer } from "react";
+import data from "./components/Data";
+import Modal from "./components/Modal";
+import Table from "./components/Table";
+import { reducer } from "./Contex/reducer";
+import Navbar from './components/Navbar'
 
-function App() {
+export const MyContext = createContext();
+
+const initialState = {
+  data,
+  select:{ } ,
+  showModal: false,
+};
+const App = () => {
+  const [state, dispatch] = useReducer(reducer, initialState);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <MyContext.Provider value={{ state, dispatch }}>
+      <div className="container">
+        <div className="row mt-5">
+          <div className="col-12 mt-5">
+            <Navbar />
+            <Table />
+            {state.showModal && <Modal />}
+          </div>
+        </div>
+      </div>
+    </MyContext.Provider>
   );
-}
+};
 
 export default App;
