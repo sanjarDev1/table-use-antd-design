@@ -1,32 +1,33 @@
-import React, { createContext, useReducer } from "react";
-import data from "./components/Data";
-import Modal from "./components/Modal";
-import Table from "./components/Table";
-import { reducer } from "./Contex/reducer";
-import Navbar from './components/Navbar'
+import React from "react";
+import { NavLink, Routes, Route } from "react-router-dom";
+import Posts from "./pages/Posts";
+import Todos from "./pages/Todos";
+import Users from "./pages/Users";
+import OnePost from "./pages/OnePost";
 
-export const MyContext = createContext();
-
-const initialState = {
-  data,
-  select:{ } ,
-  showModal: false,
-};
 const App = () => {
-  const [state, dispatch] = useReducer(reducer, initialState);
-
   return (
-    <MyContext.Provider value={{ state, dispatch }}>
-      <div className="container">
-        <div className="row mt-5">
-          <div className="col-12 mt-5">
-            <Navbar />
-            <Table />
-            {state.showModal && <Modal />}
-          </div>
-        </div>
-      </div>
-    </MyContext.Provider>
+    <div className="container katta">
+      <h1>Json placeholder</h1>
+      <NavLink to={"/posts"}>
+        <button className="btn btn-dark float-left m-1 ">Posts</button>
+      </NavLink>
+      <NavLink to={"/todos"}>
+        <button className="btn btn-dark float-left m-1 ">Todos</button>
+      </NavLink>
+      <NavLink to={"/users"}>
+        <button className="btn btn-dark float-left  m-1">Users</button>
+      </NavLink>
+      <br />
+      <hr />
+      <br />
+      <Routes>
+        <Route path={"/posts/:id"} element={<OnePost />} />
+        <Route path={"/posts"} element={<Posts />} />
+        <Route path={"/todos"} element={<Todos />} />
+        <Route path={"/users"} element={<Users />} />
+      </Routes>
+    </div>
   );
 };
 
